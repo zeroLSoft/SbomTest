@@ -1,0 +1,180 @@
+#include "pch.h"
+#include "AddressCombiner.h"
+
+
+// add case for ../
+// add loop for recheck, and another if needed, and empty() checking
+// another cases
+// check for another cases with include
+// fix //
+// test all the cases
+//move to string_view
+// default http
+// default not require www
+
+using std::string_view;
+
+class String
+{
+public:
+    string_view str;
+    size_t begin = 0;
+    size_t end = 1;
+public:
+    String(const string& str) : str{ str }, begin{ 0 }, end{ str.size() } {}
+    size_t size1() { return end - begin; }
+    bool empty() { return size1() == 0; }
+    string to_string() { return std::string(sub_string()); }      //!to fix
+    string_view sub_string() { return str.substr(begin, end);  }
+    bool contains(string&& s) { return !empty() && sub_string().find(s) != std::string_view::npos; }
+    size_t find(string&& s) { return sub_string().find(s); }
+    size_t find_last_of(string&& s) { return sub_string().find_last_of(s); }
+    bool size_is(size_t size) { return !empty() && size1() == size; }
+    bool size_le(size_t size) { return !empty() && size1() >= size; }
+    bool starts_with(string&& s) 
+    { 
+        size_t sLength{ s.size() };
+        if (size_le(sLength)) return str.substr(begin, sLength) == s;
+        else return  false;
+    }
+    bool ends_with(string&& s)
+    {
+        size_t sLength{ s.size() };
+        if (size_le(sLength)) return str.substr(end - sLength, end) == s; // ?
+        else return  false;
+    }
+    void trim() 
+    {
+        while (starts_with(" ")) 
+            ++begin;
+        while (ends_with(" ")) 
+            --end;
+    }
+    void trimback(string&& s)
+    {
+        while (ends_with(std::move(s))) --end;
+    }
+};
+
+
+void dotDotSlashCase(String& uri1, String& uri2)    // ../
+{
+    if (uri2.size_le(3)) uri2.begin += 3;
+    else { uri2.end = uri2.begin; }//?  //""; uri2 =  ? uri2.substr(3) :  ""
+
+    size_t slash = uri1.find_last_of("/");
+    size_t doubleslash = uri1.find("//") + 1;   //or :// +2
+    string_view before = uri1.sub_string().substr(0, slash);
+    string_view after = uri1.sub_string().substr(slash + 1);
+    //bool isAnAddress
+    if (!before.empty() && before != after && doubleslash != slash)
+    {
+        uri1.end = uri1.begin + slash;  // uri1 = before; //uri1 = uri1.substr(0, slash)
+    }
+
+}
+
+
+
+void slashCase(String& uri1, String& uri2)  // /
+{
+    ++uri2.begin;
+    size_t slash = uri1.find_last_of("/");
+    size_t doubleslash = uri1.find("//") + 1;
+    string_view before = uri1.sub_string().substr(0, slash);
+    string_view after = uri1.sub_string().substr(slash + 1);
+    while (!before.empty() && before != after && doubleslash != slash)
+    {
+        uri1.end = uri1.begin + slash; //uri1 = before;
+        slash = uri1.sub_string().find_last_of("/");
+        before = uri1.sub_string().substr(0, slash);
+        after = uri1.sub_string().substr(slash + 1);
+    }
+    string a0 = uri1.to_string();
+    string b0 = uri2.to_string();
+}
+
+
+
+
+string combiner(string s_uri1, string s_uri2)
+{
+    {    //uri 1 as copy
+        //if (uri1.find("://" != uri1.npos())
+        //string_view sv1 = uri1;
+        //string_view sv2 = uri2;
+
+        String uri1(s_uri1);
+        String uri2(s_uri2);
+
+        if ( uri2.contains("://") ) return uri2.to_string();
+
+        else if (uri2.size_is(1) && uri2.starts_with("/"))
+            slashCase(uri1, uri2);                               //!to fix
+
+        uri1.trim();
+        uri2.trim();
+        uri1.trimback("/");
+        uri2.trimback("/");
+
+
+        string a1 = uri1.to_string();
+        string b1 = uri2.to_string();
+
+        while (uri2.size_le(2))   //not enooght for a break condition!
+        {
+            if (uri2.starts_with("./")) { ++uri2.begin; }
+            else if (uri2.starts_with("../"))
+            {
+                dotDotSlashCase(uri1, uri2);
+            }
+            else if (uri2.starts_with("//"))
+            {
+                uri2.begin += 2;   //?
+                size_t doubleslash = uri1.find("//") + 2;
+                string_view before = uri1.sub_string().substr(0, doubleslash);
+                if (!before.empty()) uri1.end = uri1.begin + doubleslash;
+                else { uri1.begin = 0; uri1.end = uri1.begin; } //;uri1 = "";
+                break;
+            }
+            else if (uri2.starts_with("/"))
+            {  
+                slashCase(uri1, uri2);
+                break;
+            }
+            // stupied cases when starts with ////////////////// for uri1 and 2
+            //else if (sub1Char == " ") { uri2 = "%20" + uri2.substr(1); }  //future fixes for URI address
+            else break; //no other cases awailable
+        }
+
+        string a2 = uri1.to_string();
+        string b2 = uri2.to_string();
+
+
+        if (uri2.starts_with(".."))
+            dotDotSlashCase(uri1, uri2);
+        else if (uri2.starts_with("."))
+            ++uri2.begin;
+        
+
+        //combined rule, adding a '/' betwin uri1/uri2
+        string slash = "";
+        if (!uri1.ends_with("/") && !uri2.starts_with("/")) slash = "/";
+
+
+        string a3 = uri1.to_string();
+        string b3 = uri2.to_string();
+
+
+        string combined_uri;
+        combined_uri.resize(slash.size() + uri1.size1() + uri2.size1());
+        //to fix!, create realoc
+        combined_uri = uri1.to_string() + slash + uri2.to_string();
+
+        return combined_uri;
+    }
+
+}
+
+
+

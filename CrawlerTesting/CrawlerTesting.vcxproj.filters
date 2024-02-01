@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="AddressCombinerTest.cpp" />
+    <ClCompile Include="CrawlerRunTest.cpp" />
+    <ClCompile Include="Utils.cpp">
+      <Filter>Mudels</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="CrawlerRunMockTest.cpp">
+      <Filter>Classes\CrawlerRunTest</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Mudels</Filter>
+    </ClInclude>
+    <ClInclude Include="CrawlerRunMockTest.h">
+      <Filter>Classes\CrawlerRunTest</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test_case.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Mudels">
+      <UniqueIdentifier>{462c5109-134a-427f-8310-639bc58fbf63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Settings">
+      <UniqueIdentifier>{18a6601f-8582-40c5-ba66-eaef67d62137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{fa08854e-350d-463a-a9f2-e9e1e468d037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\CrawlerRunTest">
+      <UniqueIdentifier>{2e801c26-4b04-421b-b449-25084ec3e341}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <Filter>Settings</Filter>
+    </None>
+  </ItemGroup>
+</Project>

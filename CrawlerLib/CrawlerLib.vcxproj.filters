@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{a4356d51-8dfc-4206-beab-b24e31d24bbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{a68aa948-8514-4807-aa52-94401b964717}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mudels">
+      <UniqueIdentifier>{82f67e5e-8f1c-49df-bfaf-ad015af2afd3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CrawlerRun.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="IHtmlRequest.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ICrawlerRun.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="AddressCombiner.h">
+      <Filter>Mudels</Filter>
+    </ClInclude>
+    <ClInclude Include="HtmlRequest.h">
+      <Filter>Mudels</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Image.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ICrawlerRun.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="IHtmlRequest.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="CrawlerRun.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="AddressCombiner.cpp">
+      <Filter>Mudels</Filter>
+    </ClCompile>
+    <ClCompile Include="HtmlRequest.cpp">
+      <Filter>Mudels</Filter>
+    </ClCompile>
+    <ClCompile Include="CrawlerLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
