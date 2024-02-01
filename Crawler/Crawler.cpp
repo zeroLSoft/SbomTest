@@ -7,6 +7,7 @@
 
 #include "../CrawlerLib/pch.h"
 #include <CrawlerRun.h>
+#include <boost/align.hpp>
 
 using std::cout;
 using std::endl;
